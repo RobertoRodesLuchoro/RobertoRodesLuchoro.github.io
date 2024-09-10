@@ -68,6 +68,18 @@ section {
     margin-bottom: 20px;
 }
 
+.image-group {
+    display: grid;
+    grid-template-columns: auto auto;
+    /*justify-content: space-between; /* O 'center' si quieres que se centren con espacio igual */
+    /*align-items: center; */
+}
+
+.image-group img {
+    margin: 1px; /* Espaciado entre las imágenes */
+    max-width:100%;
+}
+
 .project h3 {
     margin-top: 0;
 }
