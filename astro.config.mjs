@@ -7,5 +7,5 @@ export default defineConfig({
   integrations: [tailwind()],
   output: 'static',
   site: 'https://robertorodesluchoro.github.io/',
-  base: '/robertorodesluchoro.github.io/'
+  base: '/RobertoRodesLuchoro.github.io/'
 });
