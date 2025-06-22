@@ -1,0 +1,128 @@
+---
+import Html from "../icons/Tecnologias/Lenguajes/Html.astro";
+import Css from "../icons/Tecnologias/Lenguajes/Css.astro";
+import Js from "../icons/Tecnologias/Lenguajes/Js.astro";
+import Social_icons from "./Social_icons.astro";
+import Github from "../icons/Social/Github.astro";
+import Angular from "../icons/Tecnologias/Frameworks_Librerias/Angular.astro";
+import Java from "../icons/Tecnologias/Lenguajes/Java.astro";
+import Ts from "../icons/Tecnologias/Lenguajes/Ts.astro";
+import SpringBoot from "../icons/Tecnologias/Frameworks_Librerias/SpringBoot.astro";
+import Dart from "../icons/Tecnologias/Lenguajes/Dart.astro";
+import Flutter from "../icons/Tecnologias/Frameworks_Librerias/Flutter.astro";
+import Jwt from "../icons/Tecnologias/Herramientas_Adicionales/Jwt.astro";
+
+const TAGS = {
+  Html: {
+    name: "Html",
+    class: "bg-[#963419] text-white",
+    icon: Html,
+  },
+  Css: {
+    name: "Css",
+    class: "bg-[#07436b] text-white",
+    icon: Css,
+  },
+  Js: {
+    name: "Js",
+    class: "bg-[#a39535] text-white",
+    icon: Js,
+  },
+  Angular: {
+    name: "Angular",
+    class: "bg-[#dd0031] text-white",
+    icon: Angular,
+  },
+  Java: {
+    name: "Java",
+    class: "bg-[#0f2c3f] text-white", // azul oscuro típico
+    icon: Java,
+  },
+  Ts: {
+    name: "Ts",
+    class: "bg-[#1f4f82] text-white",
+    icon: Ts,
+  },
+  SpringBoot: {
+    name: "Spring Boot",
+    class: "bg-[#518029] text-white",
+    icon: SpringBoot, // Asegúrate de importar el ícono correspondiente
+  }, 
+  Dart: {
+    name: "Dart",
+    class: "bg-[#02569B] text-white", // Azul oscuro típico de Dart
+    icon: Dart,
+  },
+
+  Flutter: {
+    name: "Flutter",
+    class: "bg-[#02569B] text-white", // También usa el azul Dart como base
+    icon: Flutter,
+  },
+  Jwt: {
+    name: "JWT",
+    class: "bg-[#1e1e1e] text-white",
+    icon: Jwt,
+  }
+};
+
+const PROJECTS = [
+  {
+    title: "ERP de Gestión de Vacaciones - HolidaysApp",
+    description: "Desarrollé una aplicación web completa para gestionar reservas de vacaciones, utilizando Angular en el frontend y Java con Spring Boot en el backend. Implementé autenticación segura mediante tokens JWT y gestión robusta de roles y permisos utilizando Spring Security, además de funcionalidades avanzadas de importación y exportación de datos mediante archivos Excel.",
+    link: "#",
+    github: "https://github.com/RobertoRodesLuchoro/ERP-HolidaysApp",
+    image: "../public/img/proxpert-garage.png",
+    tags: [TAGS.Html, TAGS.Css, TAGS.Js, TAGS.Ts , TAGS.Java, TAGS.SpringBoot, TAGS.Jwt, TAGS.Angular],
+  },
+  {
+    title: "ERP de Gestión de Taller - ProXpert Garage",
+    description: "ProXpert Garage es una app para gestión de talleres mecánicos desarrollada como proyecto final de ciclo. Cuenta con backend en Java (Spring Boot), seguridad con JWT y Spring Security, y control por roles (mecánico, administrativo, jefe de taller y administrador). Permite gestionar órdenes de trabajo, balance financiero y una dashboard con métricas. Incluye API REST y frontend multiplataforma en Flutter.",
+    link: "#",
+    github: "https://github.com/RobertoRodesLuchoro/ERP-ProXpert-Garage",
+    image: "../public/img/holidays-app.png",
+    tags: [TAGS.Java, TAGS.SpringBoot,TAGS.Jwt, TAGS.Dart, TAGS.Flutter],
+  },
+];
+---
+
+<div class="flex flex-col gap-y-24">
+  {PROJECTS.map(({ image, title, description, tags, github }) => (
+    <article class="flex flex-col items-center text-center md:text-left md:items-start gap-y-6">
+      
+      <!-- Texto del proyecto -->
+      <div class="w-full md:max-w-4xl">
+        <h2 class="text-3xl font-bold mb-2">{title}</h2>
+        <div class="flex flex-wrap justify-center md:justify-start mt-2 mb-4 gap-2">
+          {tags.map((tag) => (
+            <span class={`flex gap-x-2 rounded-full text-xs ${tag.class} py-1 px-2`}>
+              <tag.icon className="size-4" />
+              {tag.name}
+            </span>
+          ))}
+        </div>
+        <p class="mt-2 leading-relaxed text-[1.375rem] text-justify">{description}</p>
+      </div>
+
+
+      <!-- Imagen + Botón -->
+      <div class="w-full max-w-5xl flex flex-col items-center gap-y-4">
+        <!-- Botón centrado debajo de la imagen -->
+        {github && (
+          <Social_icons href={github}>
+            <Github class="size-6" />
+            Code
+          </Social_icons>
+        )}
+        <div class="relative flex flex-col items-center overflow-hidden rounded-xl border border-gray-800 group mt-3">
+          <img 
+            alt="Captura del Proyecto" 
+            class="w-full h-auto max-w-4xl object-contain transition-transform duration-500 group-hover:scale-105" 
+            loading="lazy" 
+            src={image} 
+          />
+        </div>
+      </div>
+    </article>
+  ))}
+</div>

@@ -1,0 +1,74 @@
+---
+import Tecnos_icons from "./Tecnos_icons.astro";
+import Html from '../icons/Tecnologias/Lenguajes/Html.astro';
+import Css from '../icons/Tecnologias/Lenguajes/Css.astro';
+import Csharp from '../icons/Tecnologias/Lenguajes/Csharp.astro';
+import Js from '../icons/Tecnologias/Lenguajes/Js.astro';
+import Ast from '../icons/Tecnologias/Frameworks_Librerias/Ast.astro';
+import Bootstrap from '../icons/Tecnologias/Frameworks_Librerias/Bootstrap.astro';
+import Express from '../icons/Tecnologias/Frameworks_Librerias/Express.astro';
+import Node from '../icons/Tecnologias/Frameworks_Librerias/Node.astro';
+import Tailwind from '../icons/Tecnologias/Frameworks_Librerias/Tailwind.astro';
+import Mongo from '../icons/Tecnologias/Bases_de_datos/Mongo.astro';
+import Mysql from '../icons/Tecnologias/Bases_de_datos/Mysql.astro';
+import Figma from '../icons/Tecnologias/Herramientas_Adicionales/Figma.astro';
+import Git from '../icons/Tecnologias/Herramientas_Adicionales/Git.astro';
+import Tecno_icon from '../icons/Titulos/Tecno_icon.astro';
+import Java from "../icons/Tecnologias/Lenguajes/Java.astro";
+import Ts from "../icons/Tecnologias/Lenguajes/Ts.astro";
+import Dart from "../icons/Tecnologias/Lenguajes/Dart.astro";
+import Postgresql from "../icons/Tecnologias/Bases_de_datos/Postgresql.astro";
+import SpringBoot from "../icons/Tecnologias/Frameworks_Librerias/SpringBoot.astro";
+import Angular from "../icons/Tecnologias/Frameworks_Librerias/Angular.astro";
+import Flutter from "../icons/Tecnologias/Frameworks_Librerias/Flutter.astro";
+import Docker from "../icons/Tecnologias/Herramientas_Adicionales/Docker.astro";
+import Jwt from "../icons/Tecnologias/Herramientas_Adicionales/Jwt.astro";
+---
+
+<div class="flex flex-col items-center">
+  <h2 class="text-4xl font-semibold pb-10 flex gap-x-3 items-center text-center mb-4">
+    <Tecno_icon class="w-12 h-12" /> Tecnologías
+  </h2>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 p-4">
+    <div>
+      <h2 class="text-2xl opacity-80 mb-6 text-center">Lenguajes</h2>
+      <nav class="flex flex-wrap justify-center gap-4">
+        <Tecnos_icons title="HTML"><Html class="w-12 h-12" /></Tecnos_icons>
+        <Tecnos_icons title="CSS"><Css class="w-12 h-12" /></Tecnos_icons>
+        <Tecnos_icons title="JavaScript"><Js class="w-12 h-12" /></Tecnos_icons>
+        <Tecnos_icons title="TypeScript"><Ts className="w-12 h-12" /></Tecnos_icons>
+        <Tecnos_icons title="Java"><Java class="w-12 h-12" /></Tecnos_icons>
+        <Tecnos_icons title="C#"><Csharp class="w-12 h-12" /></Tecnos_icons>
+        <Tecnos_icons title="Dart"><Dart className="w-12 h-12" /></Tecnos_icons>
+      </nav>
+      <h2 class="text-2xl opacity-80 mt-8 mb-6 text-center">Frameworks y Librerías</h2>
+      <nav class="flex flex-wrap justify-center gap-4">
+        <Tecnos_icons title="Spring Boot"><SpringBoot className="w-12 h-12" /></Tecnos_icons>
+        <Tecnos_icons title="Angular"><Angular className="w-12 h-12 text-red-500" /></Tecnos_icons>
+        <Tecnos_icons title="Flutter"><Flutter className="w-12 h-12 text-blue-500" /></Tecnos_icons>
+        <Tecnos_icons title="Astro"><Ast class="w-12 h-12" /></Tecnos_icons>
+        <Tecnos_icons title="Bootstrap"><Bootstrap class="w-12 h-12" /></Tecnos_icons>
+        <Tecnos_icons title="Express"><Express class="w-12 h-12" /></Tecnos_icons>
+        <Tecnos_icons title="Node.js"><Node class="w-12 h-12" /></Tecnos_icons>
+        <Tecnos_icons title="Tailwind CSS"><Tailwind class="w-12 h-12" /></Tecnos_icons>
+      </nav>
+    </div>
+    
+    <div>
+      <h2 class="text-2xl opacity-80 mb-6 text-center">Bases de Datos</h2>
+      <nav class="flex flex-wrap justify-center gap-4">
+        <Tecnos_icons title="PostgreSQL"><Postgresql className="w-12 h-12 text-blue-500" /></Tecnos_icons>
+        <Tecnos_icons title="MongoDB"><Mongo class="w-12 h-12" /></Tecnos_icons>
+        <Tecnos_icons title="MySQL"><Mysql class="w-12 h-12" /></Tecnos_icons>
+      </nav>
+      <h2 class="text-2xl opacity-80 mt-8 mb-6 text-center">Herramientas Adicionales</h2>
+      <nav class="flex flex-wrap justify-center gap-4">
+        <Tecnos_icons title="JWT"><Jwt className="w-12 h-12" /></Tecnos_icons>
+        <Tecnos_icons title="Docker"><Docker className="w-12 h-12" /></Tecnos_icons>
+        <Tecnos_icons title="Git"><Git class="w-12 h-12" /></Tecnos_icons>
+        <Tecnos_icons title="Figma"><Figma class="w-12 h-12" /></Tecnos_icons>
+      </nav>
+    </div>
+  </div>
+</div>

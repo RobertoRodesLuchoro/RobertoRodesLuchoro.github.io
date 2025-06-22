@@ -1,0 +1,106 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Badge from "../components/Badge.astro";
+import Linkedin from "../icons/Social/Linkedin.astro";
+import Github from "../icons/Social/Github.astro";
+import Social_icons from "../components/Social_icons.astro";
+import Gmail from "../icons/Social/Gmail.astro";
+import Section from "../components/Section.astro";
+import Section_tecno from "../components/Section_tecno.astro";
+import Tecnologias from "../components/Tecnologias.astro";
+import Code from "../icons/Titulos/Code.astro";
+import Proyectos from "../components/Proyectos.astro";
+import Certificados from "../components/Certificados.astro";
+import Sobre_mi from "../components/Sobre_mi.astro";
+import Cert_icon from "../icons/Titulos/Cert_icon.astro";
+import Me_icons from "../icons/Titulos/Me_icon.astro";
+import Section_sobremi from "../components/Section_sobremi.astro";
+import Footer from "../components/Footer.astro";
+import Section_certificados from "../components/Section_certificados.astro";
+import Experiencia from "../components/Experiencia.astro";
+import Discord from "../icons/Social/Discord.astro";
+import Briefcase from "../icons/Briefcase.astro";
+---
+
+<Layout
+  title="Portfolio de Roberto - Programador Full-Stack"
+  description="Mi objetivo es aprender y mejorar constantemente, participando en proyectos innovadores que me permitan ampliar mis conocimientos y aportar soluciones creativas y efectivas."
+>
+  <main class="px-4">
+    <Section class="flex flex-col items-center px-4">
+      <h1
+         class="themed-title pl-10 text-left text-3xl md:text-4xl lg:text-5xl font-bold flex flex-row flex-wrap justify-left gap-x-5 pt-10 pb-6 lg:pb-6"
+      >
+        Hola, soy Roberto
+        <a
+          href="https://www.linkedin.com/in/roberto-rodes-luchoro/"
+          target="_blank"
+          rel="noopener"
+          class="flex items-center transition hover:scale-105"
+        >
+          <Badge>Disponible para trabajar</Badge>
+        </a>
+      </h1>
+
+      <div
+        class="text-xl lg:text-2xl max-w-[700px] mx-auto text-left sm:text-justify text-pretty [&>p]:mb-4 [&>p>strong]:text-blue-300 [&>p>strong]:font-medium"
+      >
+        <h2
+          class="text-blue-300 text-2xl lg:text-3xl block mb-[25px] font-semibold italic text-center sm:text-left"
+        >
+          Programador Full-Stack.
+        </h2>
+
+        <p class="leading-relaxed text-[1.375rem]">
+          Soy <strong>Técnico Superior en Desarrollo de Aplicaciones Multiplataforma</strong>, con 22 años y residente en Alicante, España. Me especializo en
+          tecnología y desarrollo de software, con un enfoque constante en el
+          aprendizaje y la mejora continua. Mi objetivo es participar en
+          proyectos innovadores que me permitan crecer profesionalmente y
+          ofrecer soluciones efectivas.
+        </p>
+
+      </div>
+    </Section>
+    <Section id="experiencia">
+      <h2 class="text-4xl font-semibold mb-6 flex gap-x-2 items-center justify-center text-center">
+        <Briefcase class="size-14" />
+        Experiencia laboral
+      </h2>
+      <Experiencia />
+    </Section>
+    <Section_tecno id="tecnologias">
+      <Tecnologias />
+    </Section_tecno>
+    <Section id="proyectos">
+      <div class="flex justify-center">
+        <h2
+          class="text-4xl font-semibold pb-10 flex gap-x-3 items-center text-center mb-4"
+        >
+          <Code class="size-8" />Proyectos
+        </h2>
+      </div>
+      <Proyectos />
+    </Section>
+    <Section_certificados id="certificados">
+      <div class="flex justify-center">
+        <h2
+          class="text-4xl font-semibold pb-10 flex gap-x-3 items-center text-center mb-4"
+        >
+          <Cert_icon class="size-8" />Certificados
+        </h2>
+      </div>
+      <Certificados />
+    </Section_certificados>
+    <Section_sobremi id="sobre_mi">
+      <div class="flex justify-center">
+        <h2
+          class="text-4xl font-semibold pb-10 flex gap-x-3 items-center text-center mb-4"
+        >
+          <Me_icons class="size-8" />Sobre mí
+        </h2>
+      </div>
+      <Sobre_mi />
+    </Section_sobremi>
+    <Footer />
+  </main>
+</Layout>

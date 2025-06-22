@@ -1,0 +1,22 @@
+---
+import ExperienceItem from "./ExperienciaItem.astro"
+const EXPERIENCE = [
+  {
+    date: "Actualmente...",
+    title: "Desarrollador Fullstack Trainee",
+    company: "GFT Technologies",
+    description: `Participé en un entorno ágil con metodología <strong>SCRUM</strong>, colaborando en <strong>sprints</strong> para entregar funcionalidades. Desarrollé aplicaciones en <strong>Java 17 y 22</strong> con <strong>Spring Boot usando arquitectura hexagonal</strong>, siguiendo <strong>OpenAPI First</strong> y principios básicos de <strong>TDD</strong>, usando <strong>JUnit</strong> y <strong>Mockito</strong>. También trabajé en interfaces web con <strong>Angular</strong>, aplicando buenas prácticas de arquitectura por componentes y programación reactiva, además de colaborar en <strong>integración continua</strong> y <strong>despliegues</strong> en distintos entornos.`,
+    link: "https://www.linkedin.com/in/roberto-rodes-luchoro/",
+  }
+]
+---
+
+<ol class="relative mt-16">
+  {
+    EXPERIENCE.map((experience) => (
+      <li class="">
+        <ExperienceItem {...experience} />
+      </li>
+    ))
+  }
+</ol>
