@@ -1,0 +1,24 @@
+---
+import { PROFILE } from '../../config/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-line/10 py-10">
+  <div class="shell flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
+    <p class="font-mono text-eyebrow uppercase text-muted">
+      © {year} {PROFILE.name}
+    </p>
+
+    <p class="font-mono text-eyebrow uppercase text-muted">
+      Diseñado y desarrollado con
+      <a href="https://astro.build" target="_blank" rel="noopener noreferrer" class="link-underline text-ink">
+        Astro
+      </a>
+    </p>
+
+    <a href="#top" class="link-underline font-mono text-eyebrow uppercase text-muted hover:text-ink">
+      Volver arriba
+    </a>
+  </div>
+</footer>

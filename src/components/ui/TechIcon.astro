@@ -1,0 +1,47 @@
+---
+/**
+ * Punto único de acceso a los iconos de tecnología.
+ * Los SVG heredados aceptan `class` o `className` según el archivo, así que
+ * aquí se pasan ambos y el resto del sitio sólo maneja una clave de texto.
+ */
+import Html from '../../icons/Tecnologias/Lenguajes/Html.astro';
+import Css from '../../icons/Tecnologias/Lenguajes/Css.astro';
+import Js from '../../icons/Tecnologias/Lenguajes/Js.astro';
+import Ts from '../../icons/Tecnologias/Lenguajes/Ts.astro';
+import Java from '../../icons/Tecnologias/Lenguajes/Java.astro';
+import Csharp from '../../icons/Tecnologias/Lenguajes/Csharp.astro';
+import Dart from '../../icons/Tecnologias/Lenguajes/Dart.astro';
+import Angular from '../../icons/Tecnologias/Frameworks_Librerias/Angular.astro';
+import SpringBoot from '../../icons/Tecnologias/Frameworks_Librerias/SpringBoot.astro';
+import Flutter from '../../icons/Tecnologias/Frameworks_Librerias/Flutter.astro';
+import Node from '../../icons/Tecnologias/Frameworks_Librerias/Node.astro';
+import Express from '../../icons/Tecnologias/Frameworks_Librerias/Express.astro';
+// Ojo: no llamar `Astro` a este import, sombrearía el objeto global `Astro`.
+import AstroIcon from '../../icons/Tecnologias/Frameworks_Librerias/Ast.astro';
+import Tailwind from '../../icons/Tecnologias/Frameworks_Librerias/Tailwind.astro';
+import Bootstrap from '../../icons/Tecnologias/Frameworks_Librerias/Bootstrap.astro';
+import Postgresql from '../../icons/Tecnologias/Bases_de_datos/Postgresql.astro';
+import Mysql from '../../icons/Tecnologias/Bases_de_datos/Mysql.astro';
+import Mongo from '../../icons/Tecnologias/Bases_de_datos/Mongo.astro';
+import Git from '../../icons/Tecnologias/Herramientas_Adicionales/Git.astro';
+import Docker from '../../icons/Tecnologias/Herramientas_Adicionales/Docker.astro';
+import Jwt from '../../icons/Tecnologias/Herramientas_Adicionales/Jwt.astro';
+import Figma from '../../icons/Tecnologias/Herramientas_Adicionales/Figma.astro';
+
+const ICONS: Record<string, any> = {
+  Html, Css, Js, Ts, Java, Csharp, Dart,
+  Angular, SpringBoot, Flutter, Node, Express, Astro: AstroIcon, Tailwind, Bootstrap,
+  Postgresql, Mysql, Mongo,
+  Git, Docker, Jwt, Figma,
+};
+
+interface Props {
+  name: string;
+  class?: string;
+}
+
+const { name, class: className = 'size-6' } = Astro.props;
+const Icon = ICONS[name];
+---
+
+{Icon && <Icon class={className} className={className} />}

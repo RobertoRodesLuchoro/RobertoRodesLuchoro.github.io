@@ -1,280 +1,136 @@
 ---
-import "../styles/global.css"; 
-import Header from "../components/Header.astro";
-import "@fontsource-variable/source-code-pro";
+import '@fontsource-variable/sora';
+import '@fontsource-variable/jetbrains-mono';
+import '../styles/global.css';
+
+import Nav from '../components/layout/Nav.astro';
+import Footer from '../components/layout/Footer.astro';
+import { SITE, PROFILE, SOCIALS } from '../config/site';
+
 interface Props {
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
 }
 
-const { description, title } = Astro.props;
+const { title = SITE.title, description = SITE.description } = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, SITE.url).href;
+const ogImage = new URL(SITE.ogImage, SITE.url).href;
+
+/* Datos estructurados: ayudan a que Google entienda de quién es el sitio. */
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: PROFILE.name,
+  jobTitle: PROFILE.role,
+  email: `mailto:${PROFILE.email}`,
+  url: SITE.url,
+  address: { '@type': 'PostalAddress', addressLocality: 'Alicante', addressCountry: 'ES' },
+  sameAs: SOCIALS.filter((s) => !s.href.startsWith('mailto:')).map((s) => s.href),
+};
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang={SITE.lang}>
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content={description} />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
-      rel="stylesheet"
-    />
-    <meta name="generator" content={Astro.generator} />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content="#0d0e0f" />
+    <meta name="generator" content={Astro.generator} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:site_name" content={PROFILE.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+
+    <!-- Marca que hay JS antes de pintar, para que los reveals no provoquen
+         un salto de contenido visible al cargar. -->
+    <script is:inline>
+      document.documentElement.classList.add('js-motion');
+    </script>
   </head>
 
   <body>
-     <div
-    id="theme-background"
-    class="fixed top-0 left-0 z-[-2] w-full min-h-full
-           bg-[#000000]
-           bg-[radial-gradient(#ffffff33_1px,#00091d_1px)]
-           bg-[size:20px_20px]
-           transition-colors duration-500">
-  </div>
-    <Header />
-    <slot />
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const toggle = document.getElementById('theme-toggle');
-    const menu = document.getElementById('themes-menu');
-    const html = document.documentElement;
-    const background = document.getElementById('theme-background');
-    const header = document.getElementById('site-header'); // 👈 agregado aquí
+    <a
+      href="#top"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-6 focus:top-6 focus:z-[60] focus:rounded-full focus:bg-accent focus:px-5 focus:py-3 focus:text-bg"
+    >
+      Saltar al contenido
+    </a>
 
-    // ✅ Scroll: añade clase al header si se ha desplazado
+    <!-- Halo tenue que sigue al puntero (sólo en ratón). -->
+    <div
+      id="cursor-glow"
+      aria-hidden="true"
+      class="pointer-events-none fixed -z-10 hidden size-[36rem] rounded-full opacity-0 transition-opacity duration-700 md:block"
+      style="background: radial-gradient(circle, rgb(var(--c-accent) / 0.09), transparent 62%); transform: translate(-50%, -50%);"
+    >
+    </div>
 
-  const handleNavScroll = () => {
-    if (!header) return;
-    if (window.scrollY > 5) {
-      header.classList.add('scrolled');
-    } else {
-      header.classList.remove('scrolled');
-    }
-  };
+    <Nav />
 
-  window.addEventListener('scroll', handleNavScroll);
-  handleNavScroll(); // Ejecutar al cargar
+    <main>
+      <slot />
+    </main>
 
-    // Mostrar/ocultar menú
-    if (toggle && menu) {
-      toggle.addEventListener('click', () => {
-        menu.classList.toggle('hidden');
-      });
-    }
+    <Footer />
 
-    // Actualizar fondo cuadriculado
-    const setBackground = (theme) => {
-      if (!background) return;
+    <script>
+      // --- Reveals en scroll ---------------------------------------------
+      const targets = document.querySelectorAll('[data-reveal], .reveal-line');
 
-      if (theme === 'light') {
-        background.style.backgroundColor = '#f7f7f7';
-        background.style.backgroundImage = 'radial-gradient(#00000022 1px, #f7f7f7 1px)';
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (reduceMotion || !('IntersectionObserver' in window)) {
+        targets.forEach((el) => el.classList.add('is-visible'));
       } else {
-        background.style.backgroundColor = '#000000';
-        background.style.backgroundImage = 'radial-gradient(#ffffff33 1px, #00091d 1px)';
-      }
-    };
-
-    // Actualizar estilos del menú
-    const setMenuStyle = (theme) => {
-      if (!menu) return;
-
-      if (theme === 'light') {
-        menu.style.backgroundColor = '#ffffff';
-        menu.style.color = '#000000';
-        menu.style.borderColor = '#000000';
-      } else if (theme === 'dark') {
-        menu.style.backgroundColor = '#1f2937'; // gray-800
-        menu.style.color = '#ffffff';
-        menu.style.borderColor = '#ffffff33';
-      } else {
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (prefersDark) {
-          menu.style.backgroundColor = '#1f2937';
-          menu.style.color = '#ffffff';
-          menu.style.borderColor = '#ffffff33';
-        } else {
-          menu.style.backgroundColor = '#ffffff';
-          menu.style.color = '#000000';
-          menu.style.borderColor = '#000000';
-        }
-      }
-    };
-
-    // Aplicar tema completo
-    const applyTheme = (theme) => {
-      if (theme === 'dark') {
-        html.classList.add('dark');
-        document.body.classList.add('dark-theme');
-        document.body.classList.remove('light-theme');
-        setBackground('dark');
-        setMenuStyle('dark');
-      } else if (theme === 'light') {
-        html.classList.remove('dark');
-        document.body.classList.add('light-theme');
-        document.body.classList.remove('dark-theme');
-        setBackground('light');
-        setMenuStyle('light');
-      } else {
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (prefersDark) {
-          html.classList.add('dark');
-          document.body.classList.add('dark-theme');
-          document.body.classList.remove('light-theme');
-          setBackground('dark');
-          setMenuStyle('dark');
-        } else {
-          html.classList.remove('dark');
-          document.body.classList.add('light-theme');
-          document.body.classList.remove('dark-theme');
-          setBackground('light');
-          setMenuStyle('light');
-        }
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target); // se anima una sola vez
+            });
+          },
+          { rootMargin: '0px 0px -12% 0px', threshold: 0.1 }
+        );
+        targets.forEach((el) => observer.observe(el));
       }
 
-      localStorage.setItem('theme', theme);
-    };
+      // --- Halo del cursor -------------------------------------------------
+      const glow = document.getElementById('cursor-glow');
+      const finePointer = window.matchMedia('(pointer: fine)').matches;
 
-    // Listeners de botones
-    document.getElementById('theme-light')?.addEventListener('click', () => applyTheme('light'));
-    document.getElementById('theme-dark')?.addEventListener('click', () => applyTheme('dark'));
-    document.getElementById('theme-system')?.addEventListener('click', () => applyTheme('system'));
-
-    // Aplicar el tema guardado al cargar (con validación de tipo)
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'light' || savedTheme === 'dark' || savedTheme === 'system') {
-      applyTheme(savedTheme);
-    } else {
-      applyTheme('system');
-    }
-  });
-</script>
-
+      if (glow && finePointer && !reduceMotion) {
+        let raf = 0;
+        window.addEventListener(
+          'pointermove',
+          (e) => {
+            if (raf) return;
+            raf = requestAnimationFrame(() => {
+              glow.style.left = `${e.clientX}px`;
+              glow.style.top = `${e.clientY}px`;
+              glow.style.opacity = '1';
+              raf = 0;
+            });
+          },
+          { passive: true }
+        );
+      }
+    </script>
   </body>
 </html>
-
-<style is:global>
-  :root {
-    color-scheme: dark;
-  }
-  html {
-    font-family: "Inter", system-ui, sans-serif;
-    scroll-behavior: smooth;
-  }
-  body {
-    /* background se define por clase, no aquí */
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    transition: background-color 0.5s ease;
-  }
-
-  body.dark-theme {
-    background-color: #171717;
-    color: #fff;
-  }
-
-  body.light-theme {
-    background-color: #f7f7f7;
-    color: #000;
-  }
-  .background {
-    position: fixed; /* Cambié de absolute a fixed */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -10;
-
-    background: radial-gradient(
-      circle 500px at 50% 200px,
-      #3e3e3e,
-      transparent
-    );
-
-    filter: blur(100px); /* Aplica el desenfoque */
-  }
-
-  header {
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-
-  .themed-title {
-    color: #ffffff; /* color por defecto */
-    transition: color 0.3s ease;
-  }
-
-  body.light-theme .themed-title {
-    color: #000000;
-  }
-
-  .text-themed {
-    color: #000; /* modo claro por defecto */
-    transition: color 0.3s ease;
-  }
-
-  body.dark-theme .text-themed {
-    color: #fff;
-  }
-
-  body.light-theme header.scrolled a {
-    color: #ffffff !important;
-  }
-
-  /* Forzar color blanco si scroll en modo claro */
-  body.light-theme header.scrolled {
-    color: #fff !important;
-  }
-
-  body.light-theme header.scrolled a {
-    color: #fff !important;
-  }
-
-  body.light-theme .text-csharp {
-    color: #000;
-  }
-
-  @keyframes nav-shadow {
-  0% {
-    background-color: rgba(255, 255, 255, 0);
-    box-shadow: none;
-    backdrop-filter: none;
-  }
-  100% {
-    background-color: rgba(255, 255, 255, 0.5); /* light mode */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(10px);
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  @keyframes nav-shadow {
-    0% {
-      background-color: rgba(31, 41, 55, 0); /* gray-800/0 */
-    }
-    100% {
-      background-color: rgba(31, 41, 55, 0.9); /* gray-800/90 */
-    }
-  }
-}
-
-.animate-nav-shadow {
-  animation: nav-shadow 1s linear both;
-  animation-timeline: scroll();
-  animation-range: 0 100px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 9999px;
-}
-
-  @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
-  }
-</style>

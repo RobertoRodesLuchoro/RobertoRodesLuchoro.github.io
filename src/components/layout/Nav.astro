@@ -1,0 +1,158 @@
+---
+import { NAV, PROFILE } from '../../config/site';
+---
+
+<header
+  id="site-nav"
+  class="fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-500 border-b border-transparent data-[scrolled]:border-line/10 data-[scrolled]:bg-bg/70 data-[scrolled]:backdrop-blur-xl"
+>
+  <div class="shell flex h-20 items-center justify-between gap-6">
+    <a href="#top" class="group flex items-center gap-3 font-mono text-sm tracking-tight">
+      <span class="grid size-8 place-items-center rounded-full border border-line/15 text-accent transition-colors duration-300 group-hover:border-accent">
+        RR
+      </span>
+      <span class="hidden sm:block text-muted transition-colors duration-300 group-hover:text-ink">
+        {PROFILE.name}
+      </span>
+    </a>
+
+    <nav aria-label="Principal" class="hidden md:block">
+      <ul class="flex items-center gap-1">
+        {
+          NAV.map(({ label, href }) => (
+            <li>
+              <a
+                href={href}
+                data-nav-link
+                class="group relative block px-3 py-2 font-mono text-xs uppercase tracking-widest text-muted transition-colors duration-300 hover:text-ink aria-[current=true]:text-ink"
+              >
+                {label}
+                <span class="absolute inset-x-3 -bottom-px h-px scale-x-0 bg-accent transition-transform duration-300 ease-smooth group-hover:scale-x-100 group-aria-[current=true]:scale-x-100" />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <a
+      href="#contacto"
+      class="hidden md:inline-flex items-center gap-2 rounded-full bg-ink px-5 py-2.5 font-mono text-xs uppercase tracking-widest text-bg transition-colors duration-300 hover:bg-accent"
+    >
+      Contacto
+    </a>
+
+    <button
+      id="nav-toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="nav-mobile"
+      class="md:hidden -mr-2 grid size-11 place-items-center rounded-full border border-line/15"
+    >
+      <span class="sr-only">Abrir menú</span>
+      <span class="relative block h-3 w-5">
+        <span class="absolute inset-x-0 top-0 h-px bg-ink transition-transform duration-300"></span>
+        <span class="absolute inset-x-0 bottom-0 h-px bg-ink transition-transform duration-300"></span>
+      </span>
+    </button>
+  </div>
+
+  <div id="nav-mobile" hidden class="md:hidden border-t border-line/10 bg-bg/95 backdrop-blur-xl">
+    <ul class="shell flex flex-col py-4">
+      {
+        NAV.map(({ label, href }) => (
+          <li>
+            <a href={href} data-nav-close class="block border-b border-line/5 py-4 text-display-sm text-muted">
+              {label}
+            </a>
+          </li>
+        ))
+      }
+      <li>
+        <a href="#contacto" data-nav-close class="block py-4 text-display-sm text-accent">
+          Contacto
+        </a>
+      </li>
+    </ul>
+  </div>
+</header>
+
+<script>
+  const nav = document.getElementById('site-nav');
+  const toggle = document.getElementById('nav-toggle');
+  const mobile = document.getElementById('nav-mobile');
+
+  // Fondo translúcido sólo cuando la página se ha desplazado.
+  const onScroll = () => {
+    if (!nav) return;
+    if (window.scrollY > 8) nav.setAttribute('data-scrolled', '');
+    else nav.removeAttribute('data-scrolled');
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Menú móvil.
+  const setMenu = (open: boolean) => {
+    if (!toggle || !mobile) return;
+    toggle.setAttribute('aria-expanded', String(open));
+    mobile.hidden = !open;
+    document.body.style.overflow = open ? 'hidden' : '';
+  };
+
+  toggle?.addEventListener('click', () => {
+    setMenu(toggle.getAttribute('aria-expanded') !== 'true');
+  });
+
+  mobile?.querySelectorAll('[data-nav-close]').forEach((link) => {
+    link.addEventListener('click', () => setMenu(false));
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') setMenu(false);
+  });
+
+  // Sección activa. Se resuelve por posición en cada scroll en vez de por
+  // IntersectionObserver: con saltos de ancla o scroll rápido varias secciones
+  // entran a la vez y el observer dejaba ganar a la última del lote.
+  const links = [...document.querySelectorAll<HTMLAnchorElement>('[data-nav-link]')];
+  const entries = links
+    .map((link) => {
+      const id = link.getAttribute('href') || '';
+      return { link, section: document.querySelector<HTMLElement>(id) };
+    })
+    .filter((e): e is { link: HTMLAnchorElement; section: HTMLElement } => Boolean(e.section));
+
+  if (entries.length) {
+    const syncActive = () => {
+      // Línea de referencia a un tercio de la ventana.
+      const line = window.scrollY + window.innerHeight * 0.35;
+      const atBottom =
+        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+
+      let active = entries[0];
+      for (const entry of entries) {
+        if (entry.section.offsetTop <= line) active = entry;
+      }
+      // Al final de la página gana siempre la última sección alcanzable.
+      if (atBottom) active = entries[entries.length - 1];
+
+      for (const { link } of entries) {
+        link.setAttribute('aria-current', String(link === active.link));
+      }
+    };
+
+    let ticking = false;
+    const onScrollSpy = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        syncActive();
+        ticking = false;
+      });
+    };
+
+    window.addEventListener('scroll', onScrollSpy, { passive: true });
+    window.addEventListener('resize', onScrollSpy, { passive: true });
+    syncActive();
+  }
+</script>

@@ -1,0 +1,70 @@
+---
+import { PROFILE } from '../../config/site';
+import Reveal from '../ui/Reveal.astro';
+import SplitLines from '../ui/SplitLines.astro';
+---
+
+<section id="top" class="relative flex min-h-[100svh] flex-col justify-center pt-32 pb-20">
+  <div class="shell w-full">
+    <!-- Metadatos superiores: rol a la izquierda, ubicación a la derecha. -->
+    <div class="flex flex-wrap items-start justify-between gap-6 border-b border-line/10 pb-8">
+      <Reveal>
+        <span class="eyebrow">{PROFILE.role}</span>
+      </Reveal>
+
+      <Reveal delay={120} class="text-right">
+        <span class="block font-mono text-eyebrow uppercase text-muted">Con base en</span>
+        <span class="mt-2 block font-mono text-eyebrow uppercase text-ink">{PROFILE.location}</span>
+      </Reveal>
+    </div>
+
+    <!-- Titular principal. -->
+    <div class="pt-12 md:pt-16">
+      <Reveal>
+        <p class="mb-6 text-lead text-muted">
+          Hola, soy <span class="text-ink">{PROFILE.name}</span>
+        </p>
+      </Reveal>
+
+      <SplitLines lines={PROFILE.headline} as="h1" class="text-display-xl" delay={150} stagger={110} />
+    </div>
+
+    <!-- Pie del hero: disponibilidad + presentación. -->
+    <div class="mt-16 grid gap-10 border-t border-line/10 pt-10 md:grid-cols-2 md:gap-16">
+      <Reveal delay={400} class="flex flex-col items-start gap-6">
+        {
+          PROFILE.available && (
+            <span class="inline-flex items-center gap-3 rounded-full border border-accent/30 bg-accent/5 px-4 py-2 font-mono text-eyebrow uppercase text-accent">
+              <span class="relative flex size-2">
+                <span class="absolute inline-flex size-full animate-ping rounded-full bg-accent opacity-60" />
+                <span class="relative inline-flex size-2 rounded-full bg-accent" />
+              </span>
+              {PROFILE.availableLabel}
+            </span>
+          )
+        }
+
+        <a href="#proyectos" class="link-underline text-lead text-ink">
+          Ver proyectos
+          <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+      </Reveal>
+
+      <Reveal delay={520}>
+        <p class="max-w-prose text-lead text-muted">{PROFILE.intro}</p>
+      </Reveal>
+    </div>
+  </div>
+
+  <!-- Indicador de scroll. -->
+  <div class="shell mt-16 hidden md:block">
+    <Reveal delay={700} class="flex items-center gap-3 font-mono text-eyebrow uppercase text-muted">
+      <svg class="size-4 animate-bounce" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <path d="M12 5v14M6 13l6 6 6-6" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      Desliza
+    </Reveal>
+  </div>
+</section>

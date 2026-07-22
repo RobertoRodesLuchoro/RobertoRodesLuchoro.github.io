@@ -1,0 +1,99 @@
+---
+import { PROFILE, EDUCATION, CERTIFICATIONS } from '../../config/site';
+import Reveal from '../ui/Reveal.astro';
+import SectionHeader from '../ui/SectionHeader.astro';
+---
+
+<section id="sobre-mi" class="py-section">
+  <div class="shell">
+    <SectionHeader index="04" eyebrow="Quién hay detrás" title="Sobre mí" class="mb-20" />
+
+    <div class="grid gap-16 md:grid-cols-12 md:gap-12">
+      <!-- Retrato -->
+      <Reveal class="md:col-span-5">
+        <div class="relative">
+          <div class="overflow-hidden rounded-xl border border-line/10 bg-surface">
+            <img
+              src="/img/fotoPerfil.png"
+              alt={`Retrato de ${PROFILE.name}`}
+              loading="lazy"
+              decoding="async"
+              class="w-full object-cover grayscale transition-[filter,transform] duration-700 ease-smooth hover:grayscale-0"
+            />
+          </div>
+          <span class="mt-4 block font-mono text-eyebrow uppercase text-muted">
+            {PROFILE.location}
+          </span>
+        </div>
+      </Reveal>
+
+      <!-- Relato + formación -->
+      <div class="md:col-span-7 flex flex-col gap-12">
+        <Reveal delay={120} class="flex flex-col gap-5 max-w-prose text-lead text-muted">
+          <p>
+            Tengo 22 años y vivo en Alicante. Llegué al desarrollo desde la automoción, y esa
+            mezcla me dejó una forma muy concreta de trabajar: entender bien la máquina antes
+            de tocarla.
+          </p>
+          <p>
+            Hoy me dedico al <span class="text-ink">desarrollo full-stack</span>. Disfruto especialmente
+            del backend —modelar el dominio, dejar la arquitectura ordenada, cubrirlo con pruebas—
+            pero me involucro en el ciclo completo hasta la interfaz.
+          </p>
+          <p>
+            Fuera del trabajo sigo formándome con cursos y proyectos propios, que es donde de
+            verdad se aprende.
+          </p>
+        </Reveal>
+
+        <!-- Formación -->
+        <Reveal delay={200}>
+          <h3 class="eyebrow mb-6">Formación</h3>
+          <ul class="flex flex-col">
+            {
+              EDUCATION.map((item) => (
+                <li class="grid gap-1 border-t border-line/10 py-5 sm:grid-cols-12 sm:gap-6">
+                  <span class="sm:col-span-4 font-mono text-eyebrow uppercase text-muted">
+                    {item.year}
+                  </span>
+                  <div class="sm:col-span-8">
+                    <p class="text-ink">{item.title}</p>
+                    <p class="text-sm text-muted">{item.place}</p>
+                  </div>
+                </li>
+              ))
+            }
+          </ul>
+        </Reveal>
+
+        <!-- Certificaciones -->
+        <Reveal delay={280}>
+          <h3 class="eyebrow mb-6">Certificaciones</h3>
+          <ul class="flex flex-col">
+            {
+              CERTIFICATIONS.map((cert) => (
+                <li class="group border-t border-line/10 py-5">
+                  <a href={cert.href} target="_blank" rel="noopener noreferrer" class="grid gap-1 sm:grid-cols-12 sm:gap-6">
+                    <span class="sm:col-span-4 font-mono text-eyebrow uppercase text-muted">
+                      {cert.year}
+                    </span>
+                    <div class="sm:col-span-8">
+                      <p class="flex items-center gap-2 text-ink transition-colors duration-300 group-hover:text-accent">
+                        {cert.name}
+                        <svg class="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                          <path d="M7 17 17 7M8 7h9v9" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                      </p>
+                      <p class="text-sm text-muted">{cert.issuer}</p>
+                      <p class="mt-2 max-w-prose text-sm text-muted/80">{cert.description}</p>
+                    </div>
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </Reveal>
+      </div>
+    </div>
+  </div>
+</section>

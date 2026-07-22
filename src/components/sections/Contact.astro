@@ -1,0 +1,65 @@
+---
+import { PROFILE, SOCIALS } from '../../config/site';
+import Reveal from '../ui/Reveal.astro';
+import SplitLines from '../ui/SplitLines.astro';
+import SocialIcon from '../ui/SocialIcon.astro';
+---
+
+<section id="contacto" class="py-section">
+  <div class="shell">
+    <Reveal class="flex items-center gap-4">
+      <span class="eyebrow">Hablemos</span>
+      <span class="h-px flex-1 bg-line/10"></span>
+    </Reveal>
+
+    <div class="mt-12">
+      <SplitLines lines={['¿Tienes un proyecto', 'en mente?']} class="text-display-lg" />
+    </div>
+
+    <Reveal delay={200}>
+      <p class="mt-8 max-w-prose text-lead text-muted">
+        Estoy abierto a nuevas oportunidades y colaboraciones. Escríbeme y te respondo pronto.
+      </p>
+    </Reveal>
+
+    <!-- El correo como pieza tipográfica principal. -->
+    <Reveal delay={280} class="mt-14">
+      <a
+        href={`mailto:${PROFILE.email}`}
+        class="group inline-flex max-w-full items-center gap-4 md:gap-6"
+      >
+        <span class="break-all text-display-sm text-ink transition-colors duration-500 group-hover:text-accent">
+          {PROFILE.email}
+        </span>
+        <span class="grid size-12 shrink-0 place-items-center rounded-full border border-line/15 transition-all duration-500 ease-smooth group-hover:border-accent group-hover:bg-accent group-hover:text-bg">
+          <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </span>
+      </a>
+    </Reveal>
+
+    <!-- Redes -->
+    <Reveal delay={360} class="mt-20 grid gap-px overflow-hidden rounded-xl border border-line/10 bg-line/10 sm:grid-cols-3">
+      {
+        SOCIALS.map((social) => (
+          <a
+            href={social.href}
+            target={social.href.startsWith('mailto:') ? undefined : '_blank'}
+            rel="noopener noreferrer"
+            class="group flex flex-col gap-3 bg-bg p-6 transition-colors duration-500 hover:bg-surface"
+          >
+            <span class="flex items-center justify-between">
+              <SocialIcon name={social.icon} class="size-5 text-muted transition-colors duration-300 group-hover:text-accent" />
+              <svg class="size-3.5 text-muted transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M7 17 17 7M8 7h9v9" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </span>
+            <span class="font-mono text-eyebrow uppercase text-muted">{social.label}</span>
+            <span class="truncate text-sm text-ink">{social.handle}</span>
+          </a>
+        ))
+      }
+    </Reveal>
+  </div>
+</section>

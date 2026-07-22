@@ -1,0 +1,15 @@
+---
+import { STATEMENT } from '../../config/site';
+import Marquee from '../ui/Marquee.astro';
+import SplitLines from '../ui/SplitLines.astro';
+
+const BAND = ['Java', 'Spring Boot', 'Angular', 'TypeScript', 'PostgreSQL', 'Docker', 'Flutter'];
+---
+
+<section class="py-section">
+  <Marquee items={BAND} duration={38} />
+
+  <div class="shell pt-section">
+    <SplitLines lines={STATEMENT} class="text-display-md max-w-5xl text-ink" stagger={110} />
+  </div>
+</section>

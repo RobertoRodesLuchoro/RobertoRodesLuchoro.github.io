@@ -1,0 +1,64 @@
+---
+import { EXPERIENCE } from '../../config/site';
+import Reveal from '../ui/Reveal.astro';
+import SectionHeader from '../ui/SectionHeader.astro';
+import TechPill from '../ui/TechPill.astro';
+---
+
+<section id="experiencia" class="py-section">
+  <div class="shell">
+    <SectionHeader index="01" eyebrow="Trayectoria" title="Experiencia" class="mb-20" />
+
+    <ol class="flex flex-col">
+      {
+        EXPERIENCE.map((job, i) => (
+          <li>
+            <Reveal delay={i * 100}>
+              {/* Fila con hover: el bloque entero se ilumina, no sólo el enlace. */}
+              <article class="group grid gap-6 border-t border-line/10 py-10 transition-colors duration-500 md:grid-cols-12 md:gap-10 hover:border-line/25">
+                <div class="md:col-span-3">
+                  <span class="font-mono text-eyebrow uppercase text-muted transition-colors duration-500 group-hover:text-accent">
+                    {job.from} — {job.to}
+                  </span>
+                </div>
+
+                <div class="md:col-span-9">
+                  <h3 class="text-display-sm text-ink">{job.role}</h3>
+
+                  <a
+                    href={job.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="link-underline mt-1 font-mono text-sm text-accent"
+                  >
+                    {job.company}
+                    <svg class="size-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                      <path d="M7 17 17 7M8 7h9v9" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </a>
+
+                  <p class="mt-5 max-w-prose text-body text-muted">{job.summary}</p>
+
+                  <ul class="mt-6 flex flex-col gap-3">
+                    {job.highlights.map((point) => (
+                      <li class="flex gap-4 text-body text-muted">
+                        <span class="mt-[0.7em] size-1 shrink-0 rounded-full bg-accent" />
+                        <span class="max-w-prose">{point}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div class="mt-7 flex flex-wrap gap-2">
+                    {job.stack.map((tech) => (
+                      <TechPill name={tech} />
+                    ))}
+                  </div>
+                </div>
+              </article>
+            </Reveal>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>

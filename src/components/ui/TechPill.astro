@@ -1,0 +1,16 @@
+---
+import TechIcon from './TechIcon.astro';
+import { techLabel } from '../../config/tech';
+
+/** Etiqueta compacta de tecnología: icono + nombre, en mono. */
+interface Props {
+  name: string;
+}
+
+const { name } = Astro.props;
+---
+
+<span class="inline-flex items-center gap-2 rounded-full border border-line/10 bg-elevated/60 px-3 py-1.5 font-mono text-[0.7rem] uppercase tracking-wider text-muted">
+  <TechIcon name={name} class="size-3.5" />
+  {techLabel(name)}
+</span>

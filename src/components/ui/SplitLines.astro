@@ -1,0 +1,31 @@
+---
+/**
+ * Titular revelado línea a línea: cada línea sube desde detrás de una máscara,
+ * escalonada. Es el gesto de movimiento característico de la referencia.
+ */
+interface Props {
+  lines: readonly string[];
+  as?: string;
+  class?: string;
+  stagger?: number;
+  delay?: number;
+}
+
+const {
+  lines,
+  as: Tag = 'h2',
+  class: className = 'text-display-lg',
+  stagger = 90,
+  delay = 0,
+} = Astro.props;
+---
+
+<Tag class={className}>
+  {
+    lines.map((line, i) => (
+      <span class="reveal-line block overflow-hidden pb-[0.12em]" style={`--reveal-delay:${delay + i * stagger}ms`}>
+        <span>{line}</span>
+      </span>
+    ))
+  }
+</Tag>

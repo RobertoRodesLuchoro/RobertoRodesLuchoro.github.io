@@ -1,0 +1,89 @@
+---
+import { PROJECTS } from '../../config/site';
+import Reveal from '../ui/Reveal.astro';
+import SectionHeader from '../ui/SectionHeader.astro';
+import SplitLines from '../ui/SplitLines.astro';
+import TechPill from '../ui/TechPill.astro';
+import SocialIcon from '../ui/SocialIcon.astro';
+---
+
+<section id="proyectos" class="py-section">
+  <div class="shell">
+    <SectionHeader index="02" eyebrow="Trabajo seleccionado" title="Proyectos" class="mb-24" />
+
+    <div class="flex flex-col gap-32 md:gap-40">
+      {
+        PROJECTS.map((project, i) => (
+          <article class="group">
+            {/* Metadatos: índice, año y tipo de proyecto. */}
+            <Reveal class="flex flex-wrap items-center gap-x-6 gap-y-2 border-b border-line/10 pb-5">
+              <span class="font-mono text-eyebrow text-accent">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <span class="font-mono text-eyebrow uppercase text-muted">{project.kind}</span>
+              <span class="ml-auto font-mono text-eyebrow uppercase text-muted">{project.year}</span>
+            </Reveal>
+
+            <div class="grid gap-8 pt-10 md:grid-cols-12 md:gap-12">
+              <div class="md:col-span-5">
+                <SplitLines lines={[project.name]} as="h3" class="text-display-md text-ink" />
+              </div>
+
+              <div class="md:col-span-7 md:pt-2">
+                <Reveal delay={120}>
+                  <p class="max-w-prose text-lead text-muted">{project.description}</p>
+                </Reveal>
+
+                <Reveal delay={200} class="mt-8 flex flex-wrap gap-2">
+                  {project.stack.map((tech) => (
+                    <TechPill name={tech} />
+                  ))}
+                </Reveal>
+
+                <Reveal delay={280} class="mt-10 flex flex-wrap items-center gap-8">
+                  {project.repo && (
+                    <a
+                      href={project.repo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="link-underline font-mono text-sm uppercase tracking-widest text-ink hover:text-accent"
+                    >
+                      <SocialIcon name="github" class="size-4" />
+                      Ver código
+                    </a>
+                  )}
+                  {project.demo && (
+                    <a
+                      href={project.demo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="link-underline font-mono text-sm uppercase tracking-widest text-ink hover:text-accent"
+                    >
+                      Ver demo
+                      <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                        <path d="M7 17 17 7M8 7h9v9" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                    </a>
+                  )}
+                </Reveal>
+              </div>
+            </div>
+
+            {/* Captura a todo el ancho: el peso visual del bloque. */}
+            <Reveal delay={160} class="mt-14">
+              <div class="overflow-hidden rounded-xl border border-line/10 bg-surface">
+                <img
+                  src={project.image}
+                  alt={`Captura de ${project.name}`}
+                  loading="lazy"
+                  decoding="async"
+                  class="w-full transition-transform duration-[1.2s] ease-smooth group-hover:scale-[1.03]"
+                />
+              </div>
+            </Reveal>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

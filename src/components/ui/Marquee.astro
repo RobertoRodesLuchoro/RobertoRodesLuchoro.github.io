@@ -1,0 +1,24 @@
+---
+/** Banda de texto en bucle. El contenido se duplica para que el loop no corte. */
+interface Props {
+  items: readonly string[];
+  duration?: number;
+  separator?: string;
+}
+
+const { items, duration = 45, separator = '✦' } = Astro.props;
+const track = [...items, ...items];
+---
+
+<div class="marquee-mask relative overflow-hidden border-y border-line/10 py-6" aria-hidden="true">
+  <div class="flex w-max animate-marquee gap-10" style={`--marquee-duration:${duration}s`}>
+    {
+      track.map((item) => (
+        <span class="flex shrink-0 items-center gap-10 text-display-sm text-muted">
+          {item}
+          <span class="text-accent">{separator}</span>
+        </span>
+      ))
+    }
+  </div>
+</div>

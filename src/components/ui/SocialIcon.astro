@@ -1,0 +1,17 @@
+---
+import Github from '../../icons/Social/Github.astro';
+import Linkedin from '../../icons/Social/Linkedin.astro';
+import Gmail from '../../icons/Social/Gmail.astro';
+
+const ICONS: Record<string, any> = { github: Github, linkedin: Linkedin, mail: Gmail };
+
+interface Props {
+  name: string;
+  class?: string;
+}
+
+const { name, class: className = 'size-5' } = Astro.props;
+const Icon = ICONS[name];
+---
+
+{Icon && <Icon class={className} className={className} />}
