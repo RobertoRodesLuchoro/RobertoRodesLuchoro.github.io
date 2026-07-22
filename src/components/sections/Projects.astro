@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import { PROJECTS } from '../../config/site';
 import Reveal from '../ui/Reveal.astro';
 import SectionHeader from '../ui/SectionHeader.astro';
@@ -72,9 +73,13 @@ import SocialIcon from '../ui/SocialIcon.astro';
             {/* Captura a todo el ancho: el peso visual del bloque. */}
             <Reveal delay={160} class="mt-14">
               <div class="overflow-hidden rounded-xl border border-line/10 bg-surface">
-                <img
+                <Image
                   src={project.image}
-                  alt={`Captura de ${project.name}`}
+                  alt={`Captura de la aplicación ${project.name}`}
+                  widths={[640, 960, 1440]}
+                  sizes="(max-width: 768px) 100vw, 1200px"
+                  format="webp"
+                  quality={78}
                   loading="lazy"
                   decoding="async"
                   class="w-full transition-transform duration-[1.2s] ease-smooth group-hover:scale-[1.03]"

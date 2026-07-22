@@ -1,5 +1,6 @@
 ---
-import { PROFILE, EDUCATION, CERTIFICATIONS } from '../../config/site';
+import { Image } from 'astro:assets';
+import { PROFILE, EDUCATION, CERTIFICATIONS, PORTRAIT } from '../../config/site';
 import Reveal from '../ui/Reveal.astro';
 import SectionHeader from '../ui/SectionHeader.astro';
 ---
@@ -13,9 +14,13 @@ import SectionHeader from '../ui/SectionHeader.astro';
       <Reveal class="md:col-span-5">
         <div class="relative">
           <div class="overflow-hidden rounded-xl border border-line/10 bg-surface">
-            <img
-              src="/img/fotoPerfil.png"
+            <Image
+              src={PORTRAIT}
               alt={`Retrato de ${PROFILE.name}`}
+              widths={[400, 640, 800]}
+              sizes="(max-width: 768px) 100vw, 480px"
+              format="webp"
+              quality={80}
               loading="lazy"
               decoding="async"
               class="w-full object-cover grayscale transition-[filter,transform] duration-700 ease-smooth hover:grayscale-0"

@@ -3,13 +3,21 @@
  * Editar el contenido aquí; los componentes sólo se ocupan de presentarlo.
  */
 
+/* Las imágenes se importan para que Astro las optimice en build
+   (WebP + tamaños responsive) en lugar de servir el PNG original. */
+import fotoPerfil from '../assets/fotoPerfil.png';
+import holidaysApp from '../assets/holidays-app.png';
+import proxpertGarage from '../assets/proxpert-garage.png';
+
+export const PORTRAIT = fotoPerfil;
+
 export const SITE = {
   url: 'https://robertorodesluchoro.github.io',
   title: 'Roberto Rodes — Desarrollador Full-Stack',
   description:
     'Desarrollador full-stack en Alicante. Construyo aplicaciones web con Java, Spring Boot y Angular, cuidando la arquitectura tanto como la experiencia de uso.',
   /* Sustituir por una imagen dedicada de 1200×630 cuando la tengas. */
-  ogImage: '/img/fotoPerfil.png',
+  ogImage: fotoPerfil.src,
   lang: 'es',
 } as const;
 
@@ -75,7 +83,7 @@ export const PROJECTS = [
     year: '2025',
     description:
       'Sistema de gestión integral para talleres mecánicos: órdenes de trabajo, balance financiero y dashboard de métricas, con control de acceso por rol (mecánico, administrativo, jefe de taller y administrador).',
-    image: '/img/proxpert-garage.png',
+    image: proxpertGarage,
     repo: 'https://github.com/RobertoRodesLuchoro/ERP-ProXpert-Garage',
     demo: null,
     stack: ['Java', 'SpringBoot', 'Jwt', 'Dart', 'Flutter'],
@@ -86,7 +94,7 @@ export const PROJECTS = [
     year: '2024',
     description:
       'Aplicación web para gestionar solicitudes de vacaciones de una plantilla: autenticación con JWT, roles y permisos con Spring Security, e importación y exportación masiva de datos en Excel.',
-    image: '/img/holidays-app.png',
+    image: holidaysApp,
     repo: 'https://github.com/RobertoRodesLuchoro/ERP-HolidaysApp',
     demo: null,
     stack: ['Java', 'SpringBoot', 'Jwt', 'Angular', 'Ts'],

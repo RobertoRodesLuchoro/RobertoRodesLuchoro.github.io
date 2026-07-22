@@ -6,7 +6,10 @@ interface Props {
   class?: string;
 }
 
-const { delay = 0, as: Tag = 'div', class: className = '' } = Astro.props;
+const { delay = 0, as = 'div', class: className = '' } = Astro.props as Props;
+
+// La etiqueta es dinámica, así que TypeScript no puede validar sus atributos.
+const Tag = as as any;
 ---
 
 <Tag data-reveal class={className} style={delay ? `--reveal-delay:${delay}ms` : undefined}>

@@ -55,7 +55,7 @@ const personSchema = {
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
-    <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(personSchema)} />
 
     <!-- Marca que hay JS antes de pintar, para que los reveals no provoquen
          un salto de contenido visible al cargar. -->
