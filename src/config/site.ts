@@ -31,8 +31,16 @@ export const PROFILE = {
   email: 'robertorodesluchorodev@gmail.com',
   /* Titular del hero, línea a línea: cada una se revela por separado. */
   headline: ['Construyo software', 'que resuelve', 'problemas reales'],
-  /* Roles que rotan en el titular del hero. */
-  heroRoles: ['FULL-STACK DEV', 'BACKEND JAVA', 'FRONTEND ANGULAR'],
+  /* Roles que rotan en el titular del hero. SOFTWARE ENGINEER abre y se
+     intercala entre los demás para aparecer el doble de veces. */
+  heroRoles: [
+    'SOFTWARE ENGINEER',
+    'FULL-STACK DEV',
+    'SOFTWARE ENGINEER',
+    'BACKEND JAVA',
+    'SOFTWARE ENGINEER',
+    'FRONTEND ANGULAR',
+  ],
   /* Subtítulo del hero, línea a línea. */
   heroTagline: ['Construyo aplicaciones web que resuelven', 'problemas reales'],
   intro:
