@@ -142,9 +142,36 @@
     opacity: 0;
   }
 
-  /* Al pinchar un elemento del header, cae desde arriba y rebota al aterrizar. */
-  .nav-drop {
-    animation: nav-drop 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  /* Al hacer hover sobre un elemento del header, su texto cae desde arriba
+     y rebota. Se anima el span interior para que la zona clicable no se
+     mueva y el hover no parpadee. */
+  .nav-fall {
+    display: inline-block;
+  }
+  .group:hover .nav-fall {
+    animation: nav-drop 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  /* Al pinchar, el elemento se agranda un instante y una luz difusa surge
+     del fondo tras él, sin forma definida, mientras navega a la sección. */
+  .nav-pulse {
+    position: relative;
+    z-index: 0;
+    animation: nav-pulse 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .nav-pulse::before {
+    content: '';
+    position: absolute;
+    inset: -45% -22%;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(
+      ellipse 50% 50% at 50% 50%,
+      rgb(var(--c-ink) / 0.9),
+      rgb(var(--c-ink) / 0.35) 55%,
+      transparent 75%
+    );
+    animation: nav-pulse-glow 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 
   /* Enlace con subrayado que crece desde la izquierda. */
@@ -167,6 +194,18 @@
   70% { transform: translateY(12px); }
   85% { transform: translateY(-5px); }
   100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes nav-pulse {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+
+@keyframes nav-pulse-glow {
+  0% { opacity: 0; }
+  35% { opacity: 1; }
+  100% { opacity: 0; }
 }
 
 @keyframes star-twinkle {
@@ -217,9 +256,7 @@
       transition: none !important;
     }
 
-    .animate-marquee { animation: none !important; }
     .hero-star { animation: none !important; opacity: 0.4; }
-    .nav-drop { animation: none !important; }
     .hero-role { transition: none !important; }
   }
 }

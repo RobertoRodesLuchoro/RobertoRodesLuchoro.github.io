@@ -14,7 +14,7 @@ const track = [...items, ...items];
   <div class="flex w-max animate-marquee gap-10" style={`--marquee-duration:${duration}s`}>
     {
       track.map((item) => (
-        <span class="flex shrink-0 items-center gap-10 text-display-sm text-muted">
+        <span class="flex shrink-0 items-center gap-10 text-display-sm font-semibold text-ink">
           {item}
           <span class="text-accent">{separator}</span>
         </span>

@@ -6,12 +6,12 @@ import { NAV, PROFILE } from '../../config/site';
   id="site-nav"
   class="fixed inset-x-0 top-0 z-50 border-b border-line/10 transition-[background-color,backdrop-filter] duration-500 data-[scrolled]:bg-bg/70 data-[scrolled]:backdrop-blur-xl"
 >
-  <div class="flex h-20 w-full items-center justify-between gap-6 px-6 md:px-14 lg:px-24">
+  <div class="flex h-20 w-full items-center justify-between gap-6 px-6 md:px-16 lg:px-32">
     <a
       href="#top"
-      class="font-display text-3xl uppercase tracking-wide text-ink transition-colors duration-300 hover:text-accent"
+      class="group font-display text-3xl uppercase tracking-wide text-ink transition-colors duration-300 hover:text-accent"
     >
-      {PROFILE.firstName}
+      <span class="nav-fall">{PROFILE.firstName}</span>
     </a>
 
     <nav aria-label="Principal" class="hidden md:block">
@@ -22,9 +22,9 @@ import { NAV, PROFILE } from '../../config/site';
               <a
                 href={href}
                 data-nav-link
-                class="block px-4 py-2 text-base font-semibold text-ink transition-[color,transform,scale] duration-300 ease-smooth hover:-translate-y-0.5 hover:text-accent active:scale-90 active:duration-100 aria-[current=true]:text-accent"
+                class="group block px-4 py-2 text-base font-semibold text-ink transition-colors duration-300 ease-smooth hover:text-accent aria-[current=true]:text-accent"
               >
-                {label}
+                <span class="nav-fall">{label}</span>
               </a>
             </li>
           ))
@@ -34,9 +34,9 @@ import { NAV, PROFILE } from '../../config/site';
 
     <a
       href="#contacto"
-      class="hidden md:inline-flex items-center rounded-full border border-line/30 px-7 py-3 text-base font-semibold text-ink transition-[color,background-color,border-color,transform,scale] duration-300 ease-smooth hover:-translate-y-0.5 hover:border-accent hover:bg-accent hover:text-bg active:scale-90 active:duration-100"
+      class="group hidden md:inline-flex items-center rounded-full border border-line/30 px-7 py-3 text-base font-semibold text-ink transition-colors duration-300 ease-smooth hover:border-accent hover:bg-accent hover:text-bg"
     >
-      Contacto
+      <span class="nav-fall">Contacto</span>
     </a>
 
     <button
@@ -112,19 +112,22 @@ import { NAV, PROFILE } from '../../config/site';
     if (e.key === 'Escape') setMenu(false);
   });
 
-  // Al pinchar un elemento del header, cae desde arriba con rebote.
-  // Con movimiento reducido la animación queda anulada desde CSS.
-  const dropTargets = document.querySelectorAll<HTMLElement>(
+  // Al pinchar un elemento del header se agranda y un óvalo naranja lo marca
+  // un instante mientras navega a la sección. (La caída en hover es CSS puro.)
+  const pulseTargets = document.querySelectorAll<HTMLElement>(
     '#site-nav [data-nav-link], #site-nav a[href="#top"], #site-nav a[href="#contacto"], #nav-toggle'
   );
 
-  dropTargets.forEach((el) => {
+  pulseTargets.forEach((el) => {
     el.addEventListener('click', () => {
-      el.classList.remove('nav-drop');
+      el.classList.remove('nav-pulse');
       void el.offsetWidth; // reinicia la animación si se pincha en rápida sucesión
-      el.classList.add('nav-drop');
+      el.classList.add('nav-pulse');
     });
-    el.addEventListener('animationend', () => el.classList.remove('nav-drop'));
+    // El animationend de la caída del span interior burbujea: filtramos por nombre.
+    el.addEventListener('animationend', (e) => {
+      if (e.animationName === 'nav-pulse') el.classList.remove('nav-pulse');
+    });
   });
 
   // Sección activa. Se resuelve por posición en cada scroll en vez de por
