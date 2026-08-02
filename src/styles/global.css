@@ -78,6 +78,70 @@
     @apply font-mono text-eyebrow uppercase text-accent;
   }
 
+  /* --- Hero ------------------------------------------------------------ */
+
+  /* Rejilla del fondo: brilla en el centro y se apaga hacia los bordes. */
+  .hero-grid {
+    background-image:
+      linear-gradient(rgb(var(--c-line) / 0.14) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(var(--c-line) / 0.14) 1px, transparent 1px);
+    background-size: 68px 68px;
+    -webkit-mask-image: radial-gradient(
+      ellipse 70% 60% at 50% 42%,
+      #000 15%,
+      rgb(0 0 0 / 0.3) 55%,
+      rgb(0 0 0 / 0.07) 78%,
+      transparent 95%
+    );
+    mask-image: radial-gradient(
+      ellipse 70% 60% at 50% 42%,
+      #000 15%,
+      rgb(0 0 0 / 0.3) 55%,
+      rgb(0 0 0 / 0.07) 78%,
+      transparent 95%
+    );
+  }
+
+  /* Halo de luz tenue tras el contenido central del hero. */
+  .hero-glow {
+    background: radial-gradient(
+      ellipse 48% 40% at 50% 42%,
+      rgb(var(--c-ink) / 0.07),
+      transparent 70%
+    );
+  }
+
+  /* Destello de cuatro puntas que parpadea. */
+  .hero-star {
+    position: absolute;
+    fill: rgb(var(--c-ink));
+    opacity: 0.2;
+    animation: star-twinkle 4.5s ease-in-out infinite;
+  }
+
+  /* Rol gigante en color de marca que rota entre varios títulos. */
+  .hero-role {
+    display: inline-block;
+    font-size: clamp(2.25rem, 7vw, 6.5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: rgb(var(--c-accent));
+    transition:
+      transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.45s ease;
+  }
+  .hero-role.is-out {
+    transform: translateY(-0.35em);
+    opacity: 0;
+  }
+  .hero-role.is-prep {
+    transition: none;
+    transform: translateY(0.35em);
+    opacity: 0;
+  }
+
   /* Enlace con subrayado que crece desde la izquierda. */
   .link-underline {
     @apply relative inline-flex items-center gap-2 transition-colors duration-300;
@@ -90,6 +154,11 @@
   .link-underline:focus-visible::after {
     @apply origin-left scale-x-100;
   }
+}
+
+@keyframes star-twinkle {
+  0%, 100% { opacity: 0.12; transform: scale(0.8); }
+  50% { opacity: 0.75; transform: scale(1); }
 }
 
 @layer utilities {
@@ -136,5 +205,7 @@
     }
 
     .animate-marquee { animation: none !important; }
+    .hero-star { animation: none !important; opacity: 0.4; }
+    .hero-role { transition: none !important; }
   }
 }

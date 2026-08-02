@@ -7,13 +7,11 @@ import { NAV, PROFILE } from '../../config/site';
   class="fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-500 border-b border-transparent data-[scrolled]:border-line/10 data-[scrolled]:bg-bg/70 data-[scrolled]:backdrop-blur-xl"
 >
   <div class="shell flex h-20 items-center justify-between gap-6">
-    <a href="#top" class="group flex items-center gap-3 font-mono text-sm tracking-tight">
-      <span class="grid size-8 place-items-center rounded-full border border-line/15 text-accent transition-colors duration-300 group-hover:border-accent">
-        RR
-      </span>
-      <span class="hidden sm:block text-muted transition-colors duration-300 group-hover:text-ink">
-        {PROFILE.name}
-      </span>
+    <a
+      href="#top"
+      class="font-display text-2xl uppercase tracking-wide text-ink transition-colors duration-300 hover:text-accent"
+    >
+      {PROFILE.firstName}
     </a>
 
     <nav aria-label="Principal" class="hidden md:block">
@@ -24,10 +22,9 @@ import { NAV, PROFILE } from '../../config/site';
               <a
                 href={href}
                 data-nav-link
-                class="group relative block px-3 py-2 font-mono text-xs uppercase tracking-widest text-muted transition-colors duration-300 hover:text-ink aria-[current=true]:text-ink"
+                class="block px-4 py-2 text-sm font-semibold text-ink transition-[color,transform,scale] duration-300 ease-smooth hover:-translate-y-0.5 hover:text-accent active:scale-90 active:duration-100 aria-[current=true]:text-accent"
               >
                 {label}
-                <span class="absolute inset-x-3 -bottom-px h-px scale-x-0 bg-accent transition-transform duration-300 ease-smooth group-hover:scale-x-100 group-aria-[current=true]:scale-x-100" />
               </a>
             </li>
           ))
@@ -37,7 +34,7 @@ import { NAV, PROFILE } from '../../config/site';
 
     <a
       href="#contacto"
-      class="hidden md:inline-flex items-center gap-2 rounded-full bg-ink px-5 py-2.5 font-mono text-xs uppercase tracking-widest text-bg transition-colors duration-300 hover:bg-accent"
+      class="hidden md:inline-flex items-center rounded-full border border-line/30 px-6 py-2.5 text-sm font-semibold text-ink transition-[color,background-color,border-color,transform,scale] duration-300 ease-smooth hover:-translate-y-0.5 hover:border-accent hover:bg-accent hover:text-bg active:scale-90 active:duration-100"
     >
       Contacto
     </a>
@@ -62,7 +59,11 @@ import { NAV, PROFILE } from '../../config/site';
       {
         NAV.map(({ label, href }) => (
           <li>
-            <a href={href} data-nav-close class="block border-b border-line/5 py-4 text-display-sm text-muted">
+            <a
+              href={href}
+              data-nav-close
+              class="block border-b border-line/5 py-4 text-display-sm font-semibold text-ink transition-colors duration-300 hover:text-accent"
+            >
               {label}
             </a>
           </li>

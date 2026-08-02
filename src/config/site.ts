@@ -31,6 +31,10 @@ export const PROFILE = {
   email: 'robertorodesluchorodev@gmail.com',
   /* Titular del hero, línea a línea: cada una se revela por separado. */
   headline: ['Construyo software', 'que resuelve', 'problemas reales'],
+  /* Roles que rotan en el titular del hero. */
+  heroRoles: ['FULL-STACK DEV', 'BACKEND JAVA', 'FRONTEND ANGULAR'],
+  /* Subtítulo del hero, línea a línea. */
+  heroTagline: ['Construyo aplicaciones web que resuelven', 'problemas reales'],
   intro:
     'Técnico Superior en Desarrollo de Aplicaciones Multiplataforma. Trabajo el backend con Java y Spring Boot y el frontend con Angular, con especial interés en la arquitectura limpia y el código que otros pueden mantener.',
 } as const;

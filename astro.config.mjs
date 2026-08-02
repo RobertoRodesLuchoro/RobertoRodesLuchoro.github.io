@@ -6,6 +6,9 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
+  server: {
+    open: true,
+  },
   output: 'static',
   site: 'https://robertorodesluchoro.github.io/',
   base: '/',

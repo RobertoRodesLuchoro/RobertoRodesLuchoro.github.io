@@ -17,6 +17,8 @@ export default {
       fontFamily: {
         sans: ['Sora Variable', 'Sora', 'system-ui', 'sans-serif'],
         mono: ['JetBrains Mono Variable', 'ui-monospace', 'monospace'],
+        /* Wordmark del logo: condensada y pesada al estilo de la referencia. */
+        display: ['Anton', 'Sora Variable', 'system-ui', 'sans-serif'],
       },
       fontSize: {
         // Escala fluida: un token sirve de móvil a desktop, sin sobrescrituras.

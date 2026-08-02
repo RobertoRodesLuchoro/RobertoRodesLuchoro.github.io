@@ -1,70 +1,127 @@
 ---
 import { PROFILE } from '../../config/site';
 import Reveal from '../ui/Reveal.astro';
-import SplitLines from '../ui/SplitLines.astro';
+
+/* Posición y ritmo de cada destello del fondo. */
+const stars = [
+  { left: '13%', top: '22%', size: '0.9rem', delay: '0s' },
+  { left: '24%', top: '68%', size: '1.1rem', delay: '1.2s' },
+  { left: '75%', top: '72%', size: '0.8rem', delay: '2.1s' },
+  { left: '86%', top: '42%', size: '1rem', delay: '0.6s' },
+  { left: '68%', top: '18%', size: '0.7rem', delay: '2.8s' },
+] as const;
 ---
 
-<section id="top" class="relative flex min-h-[100svh] flex-col justify-center pt-32 pb-20">
-  <div class="shell w-full">
-    <!-- Metadatos superiores: rol a la izquierda, ubicación a la derecha. -->
-    <div class="flex flex-wrap items-start justify-between gap-6 border-b border-line/10 pb-8">
-      <Reveal>
-        <span class="eyebrow">{PROFILE.role}</span>
-      </Reveal>
+<section
+  id="top"
+  class="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden pt-28 pb-16"
+>
+  <!-- Rejilla de fondo: brillante en el centro, oscura en los bordes. -->
+  <div aria-hidden="true" class="hero-grid absolute inset-0 -z-10"></div>
 
-      <Reveal delay={120} class="text-right">
-        <span class="block font-mono text-eyebrow uppercase text-muted">Con base en</span>
-        <span class="mt-2 block font-mono text-eyebrow uppercase text-ink">{PROFILE.location}</span>
-      </Reveal>
-    </div>
+  <!-- Halo de luz suave tras el contenido central. -->
+  <div aria-hidden="true" class="hero-glow absolute inset-0 -z-10"></div>
 
-    <!-- Titular principal. -->
-    <div class="pt-12 md:pt-16">
-      <Reveal>
-        <p class="mb-6 text-lead text-muted">
-          Hola, soy <span class="text-ink">{PROFILE.name}</span>
-        </p>
-      </Reveal>
-
-      <SplitLines lines={PROFILE.headline} as="h1" class="text-display-xl" delay={150} stagger={110} />
-    </div>
-
-    <!-- Pie del hero: disponibilidad + presentación. -->
-    <div class="mt-16 grid gap-10 border-t border-line/10 pt-10 md:grid-cols-2 md:gap-16">
-      <Reveal delay={400} class="flex flex-col items-start gap-6">
-        {
-          PROFILE.available && (
-            <span class="inline-flex items-center gap-3 rounded-full border border-accent/30 bg-accent/5 px-4 py-2 font-mono text-eyebrow uppercase text-accent">
-              <span class="relative flex size-2">
-                <span class="absolute inline-flex size-full animate-ping rounded-full bg-accent opacity-60" />
-                <span class="relative inline-flex size-2 rounded-full bg-accent" />
-              </span>
-              {PROFILE.availableLabel}
-            </span>
-          )
-        }
-
-        <a href="#proyectos" class="link-underline text-lead text-ink">
-          Ver proyectos
-          <svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-            <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-        </a>
-      </Reveal>
-
-      <Reveal delay={520}>
-        <p class="max-w-prose text-lead text-muted">{PROFILE.intro}</p>
-      </Reveal>
-    </div>
+  <!-- Destellos dispersos que parpadean lentamente. -->
+  <div aria-hidden="true" class="absolute inset-0 -z-10">
+    {
+      stars.map(({ left, top, size, delay }) => (
+        <svg
+          class="hero-star"
+          style={`left:${left}; top:${top}; width:${size}; animation-delay:${delay}`}
+          viewBox="0 0 24 24"
+        >
+          <path d="M12 0c.7 6.5 4.8 10.6 12 12-7.2 1.4-11.3 5.5-12 12-.7-6.5-4.8-10.6-12-12C7.2 10.6 11.3 6.5 12 0Z" />
+        </svg>
+      ))
+    }
   </div>
 
-  <!-- Indicador de scroll. -->
-  <div class="shell mt-16 hidden md:block">
-    <Reveal delay={700} class="flex items-center gap-3 font-mono text-eyebrow uppercase text-muted">
-      <svg class="size-4 animate-bounce" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-        <path d="M12 5v14M6 13l6 6 6-6" stroke-linecap="round" stroke-linejoin="round" />
-      </svg>
-      Desliza
+  <div class="shell flex w-full flex-col items-center text-center">
+    {
+      PROFILE.available && (
+        <Reveal>
+          <span class="mb-8 inline-flex items-center gap-3 rounded-full border border-accent/30 bg-accent/5 px-4 py-2 font-mono text-eyebrow uppercase text-accent">
+            <span class="relative flex size-2">
+              <span class="absolute inline-flex size-full animate-ping rounded-full bg-accent opacity-60" />
+              <span class="relative inline-flex size-2 rounded-full bg-accent" />
+            </span>
+            {PROFILE.availableLabel}
+          </span>
+        </Reveal>
+      )
+    }
+
+    <Reveal delay={120}>
+      <p class="text-display-md font-semibold text-ink">Hola, soy {PROFILE.name.split(' ').slice(0, 2).join(' ')}</p>
+    </Reveal>
+
+    <Reveal delay={260}>
+      <h1 class="mt-2">
+        <span class="sr-only">{PROFILE.role}</span>
+        <span
+          id="hero-role"
+          aria-hidden="true"
+          class="hero-role"
+          data-roles={JSON.stringify(PROFILE.heroRoles)}
+        >
+          {PROFILE.heroRoles[0]}
+        </span>
+      </h1>
+    </Reveal>
+
+    <Reveal delay={400}>
+      <p class="mt-8 text-lead text-muted">
+        {PROFILE.heroTagline.map((line) => <span class="block">{line}</span>)}
+      </p>
+    </Reveal>
+  </div>
+
+  <div class="shell mt-32 flex flex-col items-center md:mt-40">
+    <Reveal delay={550}>
+      <a href="#proyectos" class="group flex flex-col items-center gap-5 text-center">
+        <span class="text-display-sm font-bold leading-tight text-ink">
+          Proyectos<br />recientes
+        </span>
+        <svg
+          class="w-12 text-accent transition-transform duration-500 ease-smooth group-hover:translate-y-1.5 motion-safe:animate-bounce"
+          viewBox="0 0 24 14"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <path d="M0 0l12 8L24 0v6L12 14 0 6V0Z" />
+        </svg>
+      </a>
     </Reveal>
   </div>
 </section>
+
+<script>
+  // --- Rotación del rol del hero --------------------------------------
+  const el = document.getElementById('hero-role');
+  const roles: string[] = el?.dataset.roles ? JSON.parse(el.dataset.roles) : [];
+
+  if (el && roles.length > 1) {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let i = 0;
+
+    setInterval(() => {
+      i = (i + 1) % roles.length;
+
+      if (reduceMotion) {
+        el.textContent = roles[i];
+        return;
+      }
+
+      // Sale hacia arriba, se cambia el texto y entra desde abajo.
+      el.classList.add('is-out');
+      setTimeout(() => {
+        el.textContent = roles[i];
+        el.classList.add('is-prep');
+        el.classList.remove('is-out');
+        void el.offsetHeight; // fuerza reflow para que la entrada se anime
+        el.classList.remove('is-prep');
+      }, 450);
+    }, 2800);
+  }
+</script>
