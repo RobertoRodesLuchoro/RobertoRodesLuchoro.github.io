@@ -8,6 +8,8 @@ export default defineConfig({
   },
   server: {
     open: true,
+    /* Permite que el preview asigne otro puerto si 4321 está ocupado. */
+    port: Number(process.env.PORT) || 4321,
   },
   output: 'static',
   site: 'https://robertorodesluchoro.github.io/',

@@ -142,6 +142,11 @@
     opacity: 0;
   }
 
+  /* Al pinchar un elemento del header, cae desde arriba y rebota al aterrizar. */
+  .nav-drop {
+    animation: nav-drop 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
   /* Enlace con subrayado que crece desde la izquierda. */
   .link-underline {
     @apply relative inline-flex items-center gap-2 transition-colors duration-300;
@@ -154,6 +159,14 @@
   .link-underline:focus-visible::after {
     @apply origin-left scale-x-100;
   }
+}
+
+@keyframes nav-drop {
+  0% { transform: translateY(-160px); opacity: 0; }
+  55% { transform: translateY(0); opacity: 1; }
+  70% { transform: translateY(12px); }
+  85% { transform: translateY(-5px); }
+  100% { transform: translateY(0); opacity: 1; }
 }
 
 @keyframes star-twinkle {
@@ -206,6 +219,7 @@
 
     .animate-marquee { animation: none !important; }
     .hero-star { animation: none !important; opacity: 0.4; }
+    .nav-drop { animation: none !important; }
     .hero-role { transition: none !important; }
   }
 }

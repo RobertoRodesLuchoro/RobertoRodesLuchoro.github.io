@@ -4,7 +4,7 @@ import { NAV, PROFILE } from '../../config/site';
 
 <header
   id="site-nav"
-  class="fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-500 border-b border-transparent data-[scrolled]:border-line/10 data-[scrolled]:bg-bg/70 data-[scrolled]:backdrop-blur-xl"
+  class="fixed inset-x-0 top-0 z-50 border-b border-line/10 transition-[background-color,backdrop-filter] duration-500 data-[scrolled]:bg-bg/70 data-[scrolled]:backdrop-blur-xl"
 >
   <div class="shell flex h-20 items-center justify-between gap-6">
     <a
@@ -110,6 +110,21 @@ import { NAV, PROFILE } from '../../config/site';
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') setMenu(false);
+  });
+
+  // Al pinchar un elemento del header, cae desde arriba con rebote.
+  // Con movimiento reducido la animación queda anulada desde CSS.
+  const dropTargets = document.querySelectorAll<HTMLElement>(
+    '#site-nav [data-nav-link], #site-nav a[href="#top"], #site-nav a[href="#contacto"], #nav-toggle'
+  );
+
+  dropTargets.forEach((el) => {
+    el.addEventListener('click', () => {
+      el.classList.remove('nav-drop');
+      void el.offsetWidth; // reinicia la animación si se pincha en rápida sucesión
+      el.classList.add('nav-drop');
+    });
+    el.addEventListener('animationend', () => el.classList.remove('nav-drop'));
   });
 
   // Sección activa. Se resuelve por posición en cada scroll en vez de por
